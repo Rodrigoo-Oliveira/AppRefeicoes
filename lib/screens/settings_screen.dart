@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import '../components/main_drawer.dart';
 import '../models/settings.dart';
+
+
 class SettingsScreen extends StatefulWidget {
+
+  final Function(Settings) onSettingsChanged;
+
+  const SettingsScreen(this.onSettingsChanged);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -21,7 +27,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       title: Text(title),
       subtitle: Text(subtitle), 
       value: value, 
-      onChanged: onChanged,
+      onChanged: (value) {
+        onChanged(value);
+        widget.onSettingsChanged(settings);
+      }
     );
   }
 
@@ -45,13 +54,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: ListView(
               children: <Widget>[
                 _createSwitch(
-                  'Sem Lactose', 
+                  'Sem Glutén', 
                   'Exibir refeições sem glutén!', 
                   settings.isGlutenFree, 
                   (value) => setState(() => settings.isGlutenFree = value),
                 ),
                 _createSwitch(
-                  'Sem Glutén', 
+                  'Sem Lactose', 
                   'Exibir refeições sem lactose!', 
                   settings.isLactoseFree, 
                   (value) => setState(() => settings.isLactoseFree = value),
